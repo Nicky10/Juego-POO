@@ -15,6 +15,11 @@ import javax.swing.Timer;
  * @author Estudiante
  */
 public class Panel extends JPanel implements ActionListener {
+    public Image loadImage(String imageName) {
+        ImageIcon ii = new ImageIcon(imageName);
+        Image image = ii.getImage();
+        return image;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -40,11 +45,18 @@ public class Panel extends JPanel implements ActionListener {
             switch (key) {
                 case KeyEvent.VK_LEFT:
 
+                    x-=5;
+                    
                     break;
                 case KeyEvent.VK_RIGHT:
 
+                    x+=5;
+                    
                     break;
                 case KeyEvent.VK_UP:
+                    
+                    while((y+712)!=712)
+                         y++;
 
                     break;
                 case KeyEvent.VK_DOWN:
@@ -61,11 +73,18 @@ public class Panel extends JPanel implements ActionListener {
             switch (key) {
                 case KeyEvent.VK_LEFT:
                     
+                    x-=10;
+                    
                     break;
                 case KeyEvent.VK_RIGHT:
                     
+                   x+=10;
+                    
                     break;
                 case KeyEvent.VK_UP:
+                    
+                     y-=100;
+                     
 
                     break;
                 case KeyEvent.VK_DOWN:
@@ -78,7 +97,11 @@ public class Panel extends JPanel implements ActionListener {
         
     }
     
-    private int caminarP, paradoP, xBg, x, y;
+    private int caminarP;
+    private int paradoP;
+    private int BackGroundX;
+    private int y;
+    private int x;
     private Timer timer;
     boolean t;
     
@@ -86,8 +109,8 @@ public class Panel extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setFocusable(true);
         this.x = 0;
-        this.y = 70;
-        this.timer = new Timer(100, this);
+        this.y = 0;
+        this.timer = new Timer(90, this);
         timer.start();
     }
     
@@ -95,31 +118,15 @@ public class Panel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (int i = 0; i < 2201; i+=22) {
-            g.drawImage(loadImage("blue_background.png"), (xBg + i), 0, this);
+            g.drawImage(loadImage("red_background.png"), (BackGroundX + i), 0, this);
         }
         for (int i = 0; i < 2201; i+=112) {
-            g.drawImage(loadImage("ground_loop.png"), (xBg + i), 712, this);
+            g.drawImage(loadImage("ground_loop.png"), (BackGroundX + i), 712, this);
         }
-        int[] f = new int[41];
-        if (!t) {
-            for (int h : f) {
-                h = (int) (Math.random()*7+1);
-            }
-        }
-        int k = 0;
-        for (int i = 0; i < 2201; i+=55) {
-            if (f[k] == 7) {
-                g.drawImage(loadImage("coin.png"), (xBg + i), 647, this);
-            }
-            k++;
-        }
-        g.drawImage(loadImage("standing.png"), (x + 50), 579, (x + 168), 712, (142 * paradoP), 0, ((142 * paradoP) + 142), 133, this);
-//        g.drawImage(loadImage("walking.png"), (x + 50), 578, (x + 168), 712, (124 * caminarP-20), 0, ((124 * caminarP) + 98), 134, this);
+        
+            g.drawImage(loadImage("walking.png"), (x + 50), (y+578), (x + 168), (y+712), (124 * caminarP-20), 0, ((124 * caminarP) + 98), 134, this);
     }
     
-    public Image loadImage(String imageName) {
-        ImageIcon ii = new ImageIcon(imageName);
-        Image image = ii.getImage();
-        return image;
-    }
+    
+    
 }
